@@ -24,11 +24,11 @@ window.GOVERN = {
       levels: [
         { en: "AI use is scattered. Nobody has a full list of what is running or who owns it.", de: "KI-Nutzung ist verstreut. Niemand hat einen vollständigen Überblick, was läuft und wem es gehört." },
         { en: "There is an inventory, but it is maintained by hand and goes stale between reviews.", de: "Es gibt ein Inventar, aber es wird manuell gepflegt und veraltet zwischen den Reviews." },
-        { en: "The inventory is live, owned, and used in leadership decisions.", de: "Das Inventar ist aktuell, hat klare Verantwortung und fließt in Vorstandsentscheidungen ein." }
+        { en: "A live inventory covers every AI tool and agent, each with a named owner, and leadership uses it in decisions.", de: "Ein aktuelles Inventar erfasst jedes KI-Werkzeug und jeden Agenten, jeweils mit namentlich Verantwortlichem, und der Vorstand nutzt es für Entscheidungen." }
       ],
       nextStep: {
-        en: "List every AI initiative in one place, with an owner and a one-line purpose for each.",
-        de: "Listen Sie alle KI-Initiativen an einem Ort auf, jeweils mit Verantwortlichem und Zweck in einem Satz."
+        en: "List every AI initiative and agent in one place, with a named owner and a one-line purpose for each.",
+        de: "Listen Sie alle KI-Initiativen und Agenten an einem Ort auf, jeweils mit namentlich Verantwortlichem und Zweck in einem Satz."
       }
     },
     {
@@ -66,11 +66,11 @@ window.GOVERN = {
       levels: [
         { en: "Checks happen after launch, usually in response to a problem.", de: "Prüfungen finden nach dem Start statt, meist als Reaktion auf ein Problem." },
         { en: "There is a pre-launch review, but it is a gate rather than part of the design.", de: "Es gibt eine Prüfung vor dem Start, aber als Hürde, nicht als Teil des Designs." },
-        { en: "Boundaries, controls and escalation paths are designed in from the start.", de: "Grenzen, Kontrollen und Eskalationswege sind von Anfang an mitgestaltet." }
+        { en: "Every agent has defined permissions, a human checkpoint and an escalation path, designed in before it runs.", de: "Jeder Agent hat festgelegte Befugnisse, einen menschlichen Prüfpunkt und einen Eskalationsweg, gestaltet bevor er startet." }
       ],
       nextStep: {
-        en: "For one live system, write down what it may decide alone, what needs a human, and who is accountable.",
-        de: "Halten Sie für ein laufendes System fest, was es allein entscheiden darf, was ein Mensch prüft und wer verantwortlich ist."
+        en: "For one live AI system or agent, write down what it may do alone, what needs a human, what it must never do, and who is accountable.",
+        de: "Halten Sie für ein laufendes KI-System oder einen Agenten fest, was es allein tun darf, was ein Mensch prüft, was es nie tun darf und wer verantwortlich ist."
       }
     },
     {
@@ -87,7 +87,7 @@ window.GOVERN = {
       levels: [
         { en: "AI is an optional tool that individuals use when they choose to.", de: "KI ist ein optionales Werkzeug, das Einzelne nach Belieben nutzen." },
         { en: "AI is part of some workflows, but the process would run the same without it.", de: "KI ist Teil einiger Abläufe, aber der Prozess liefe ohne sie genauso." },
-        { en: "Key workflows are designed around AI, with clear hand-offs between people and systems.", de: "Zentrale Abläufe sind um KI herum gestaltet, mit klaren Übergaben zwischen Mensch und System." }
+        { en: "Key workflows are designed for people and agents together: agents are triggered by events, hand work to each other, and pass decisions to people.", de: "Zentrale Abläufe sind für Menschen und Agenten gemeinsam gestaltet: Agenten starten durch Ereignisse, übergeben einander Arbeit und reichen Entscheidungen an Menschen weiter." }
       ],
       nextStep: {
         en: "Draw one important workflow end to end and mark where AI should do the work, not just assist.",
@@ -108,7 +108,7 @@ window.GOVERN = {
       levels: [
         { en: "Leaders make decisions case by case. AI informs some of them.", de: "Führungskräfte entscheiden Fall für Fall. KI liefert gelegentlich Input." },
         { en: "Some decision rules are written down, but mostly for compliance.", de: "Einige Entscheidungsregeln sind dokumentiert, überwiegend aus Compliance-Gründen." },
-        { en: "Leaders design decision systems and spend their own time on the exceptions.", de: "Führungskräfte gestalten Entscheidungssysteme und kümmern sich selbst um die Ausnahmen." }
+        { en: "Leaders design decision systems in which agents prepare and people decide, and spend their own time on the exceptions.", de: "Führungskräfte gestalten Entscheidungssysteme, in denen Agenten vorbereiten und Menschen entscheiden, und kümmern sich selbst um die Ausnahmen." }
       ],
       nextStep: {
         en: "Name one recurring decision and write the rule that would let it be made well without you.",
@@ -129,7 +129,7 @@ window.GOVERN = {
       levels: [
         { en: "Governance depends on a project or a few committed people.", de: "Governance hängt an einem Projekt oder an wenigen engagierten Personen." },
         { en: "Governance has a home, but it runs alongside the business rather than inside it.", de: "Governance hat einen festen Ort, läuft aber neben dem Geschäft statt darin." },
-        { en: "Governance is part of how the institution normally runs, reviewed like any core process.", de: "Governance gehört zum normalen Betrieb und wird wie jeder Kernprozess überprüft." }
+        { en: "Governance is part of normal operations: agents are reviewed like team members, and those that do not earn their place are retired.", de: "Governance gehört zum normalen Betrieb: Agenten werden wie Teammitglieder überprüft, und Agenten ohne Mehrwert werden abgeschaltet." }
       ],
       nextStep: {
         en: "Put AI governance on the standing leadership agenda with a fixed cadence and an owner.",
