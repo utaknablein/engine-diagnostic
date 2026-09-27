@@ -27,9 +27,9 @@ Each block has three stages: **Experimenting**, **Coordinating**, **Native**.
 
 ## Design decisions
 
-- **The weakest block sets the pace.** The readout doesn't just average your scores. It points to your lowest block, because an organization at stage 3 in Embed and stage 1 in Verify has a problem an average would hide.
+- **The weakest block sets the pace.** Your stage is your lowest block, not your average. An organization at stage 3 in Embed and stage 1 in Verify has a problem an average would hide, so the average is shown only as context and the blocks holding you back are named and highlighted.
 - **Ties go to the earlier letter.** GOVERN is sequenced. If Ground and Redesign are equally weak, fix Ground first.
-- **One next step, not ten.** Every block ends in a single action a leader can take alone within a week. No "set up a working group."
+- **A plan built from your answers.** The 30-day plan takes your two weakest blocks and gives one action for each, then ends with a team step: everyone answers separately and compares. Every action is something a leader can do alone. No "set up a working group."
 - **Content is separate from logic.** All framework text lives in `data.js`, so the model can evolve without touching the app.
 - **Nothing leaves the browser.** No backend, no tracking, no sign-up. Leadership teams are rightly careful about where they type candid answers.
 - **Bilingual from day one.** I work with executives in the US and the DACH region, and a diagnostic should be answered in the language people think in.

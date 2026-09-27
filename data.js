@@ -27,8 +27,8 @@ window.GOVERN = {
         { en: "The inventory is live, owned, and used in leadership decisions.", de: "Das Inventar ist aktuell, hat klare Verantwortung und fließt in Vorstandsentscheidungen ein." }
       ],
       nextStep: {
-        en: "List every AI initiative in one place this week, with an owner and a one-line purpose for each.",
-        de: "Listen Sie diese Woche alle KI-Initiativen an einem Ort auf, jeweils mit Verantwortlichem und Zweck in einem Satz."
+        en: "List every AI initiative in one place, with an owner and a one-line purpose for each.",
+        de: "Listen Sie alle KI-Initiativen an einem Ort auf, jeweils mit Verantwortlichem und Zweck in einem Satz."
       }
     },
     {
@@ -138,16 +138,16 @@ window.GOVERN = {
     }
   ],
 
-  plan: {
-    en: [
-      ["This week", "Complete this diagnostic with your leadership team."],
-      ["Next week", "Draw one workflow end to end and mark where AI should do the work."],
-      ["Within 30 days", "Define the boundaries and accountability for one live AI system."]
-    ],
-    de: [
-      ["Diese Woche", "Füllen Sie diese Diagnose gemeinsam mit Ihrem Vorstand aus."],
-      ["Nächste Woche", "Zeichnen Sie einen Ablauf vollständig auf und markieren Sie, wo KI die Arbeit übernehmen soll."],
-      ["In 30 Tagen", "Legen Sie Grenzen und Verantwortung für ein laufendes KI-System fest."]
-    ]
+  // The 30-day plan is built from the reader's two weakest blocks (see app.js).
+  // This last step is the same for everyone: a diagnostic is most useful as a team conversation.
+  closingStep: {
+    en: "Ask each member of your leadership team to complete this diagnostic separately, then compare where your answers differ.",
+    de: "Lassen Sie jedes Vorstandsmitglied diese Diagnose einzeln ausfüllen und vergleichen Sie, wo Ihre Einschätzungen auseinandergehen."
+  },
+
+  // Shown when every block is at stage 3.
+  allNative: {
+    en: "You are at stage 3 across all six blocks. The risk now is drift: review this every quarter, and test your answers against someone outside the leadership team.",
+    de: "Sie stehen in allen sechs Bausteinen auf Stufe 3. Das Risiko ist jetzt schleichender Rückschritt: Prüfen Sie dies jedes Quartal und gleichen Sie Ihre Einschätzung mit jemandem außerhalb des Vorstands ab."
   }
 };

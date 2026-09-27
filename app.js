@@ -1,6 +1,7 @@
 // GOVERN Diagnostic
 // Renders the six building blocks, collects a stage (1 to 3) for each,
-// and returns a readout: overall stage, the weakest block, and a 30-day plan.
+// and returns a readout: the stage set by the weakest blocks, where to start,
+// and a 30-day plan built from the reader's own answers.
 
 const UI = {
   en: {
@@ -8,9 +9,12 @@ const UI = {
     intro: "Six building blocks, three stages each. Choose the description that matches where your organization is today, not where you plan to be.",
     score: "See my readout",
     missing: "Please choose a stage for every building block.",
-    overall: "Overall stage",
-    focus: "Start here",
+    overall: "Your stage",
+    average: "average",
+    heldBack: (names) => `Held back by ${names}. Your weakest blocks set the pace, not your average.`,
     plan: "Your next 30 days",
+    when: ["This week", "Within two weeks", "Within 30 days"],
+    and: "and",
     copy: "Copy summary",
     copied: "Copied",
     lang: "Deutsch",
@@ -21,9 +25,12 @@ const UI = {
     intro: "Sechs Bausteine, jeweils drei Stufen. Wählen Sie die Beschreibung, die Ihr Institut heute trifft, nicht den Zielzustand.",
     score: "Auswertung anzeigen",
     missing: "Bitte wählen Sie für jeden Baustein eine Stufe.",
-    overall: "Gesamtstufe",
-    focus: "Hier beginnen",
+    overall: "Ihre Stufe",
+    average: "Durchschnitt",
+    heldBack: (names) => `Gebremst durch ${names}. Ihre schwächsten Bausteine bestimmen das Tempo, nicht Ihr Durchschnitt.`,
     plan: "Ihre nächsten 30 Tage",
+    when: ["Diese Woche", "In zwei Wochen", "In 30 Tagen"],
+    and: "und",
     copy: "Zusammenfassung kopieren",
     copied: "Kopiert",
     lang: "English",
@@ -32,10 +39,11 @@ const UI = {
 };
 
 const state = { lang: "en", answers: {} };
-const { stages, blocks, plan } = window.GOVERN;
+const { stages, blocks, closingStep, allNative } = window.GOVERN;
 
 const t = (key) => UI[state.lang][key];
 const loc = (obj) => obj[state.lang];
+const num = (n) => n.toLocaleString(state.lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
 function renderText() {
   document.documentElement.lang = state.lang;
@@ -68,17 +76,39 @@ function renderForm() {
 }
 
 // Pure scoring logic, kept separate so it can be tested on its own.
+// GOVERN's rule: the weakest block sets the pace, so the headline stage is the
+// lowest stage, not the rounded average. The average is shown only as context.
 function score(answers) {
   const values = blocks.map((b) => answers[b.key]);
   if (values.some((v) => !v)) return null;
 
   const average = values.reduce((a, b) => a + b, 0) / values.length;
   const lowest = Math.min(...values);
-  // The weakest block sets the pace. Ties go to the earlier block,
-  // because GOVERN is sequenced: Ground before Orchestrate, and so on.
-  const focus = blocks.find((b) => answers[b.key] === lowest);
 
-  return { average, stage: Math.round(average), focus, lowest };
+  // Weakest first. Ties keep GOVERN order, because the framework is sequenced:
+  // Ground before Orchestrate, and so on. (Array.prototype.sort is stable.)
+  const ranked = [...blocks].sort((a, b) => answers[a.key] - answers[b.key]);
+  const holdingBack = blocks.filter((b) => answers[b.key] === lowest);
+  const priorities = ranked.filter((b) => answers[b.key] < 3).slice(0, 2);
+
+  return { average, stage: lowest, holdingBack, priorities, allNative: lowest === 3 };
+}
+
+// The plan: one step for each of the two weakest blocks, then a team step.
+function buildPlan(r) {
+  const steps = r.priorities.map((b) => ({ block: b, text: loc(b.nextStep) }));
+  steps.push({ block: null, text: loc(closingStep) });
+  const when = t("when");
+  return steps.map((step, i) => ({
+    ...step,
+    when: i === steps.length - 1 ? when[2] : when[i]
+  }));
+}
+
+function joinNames(list) {
+  const names = list.map((b) => loc(b.name));
+  if (names.length === 1) return names[0];
+  return `${names.slice(0, -1).join(", ")} ${t("and")} ${names[names.length - 1]}`;
 }
 
 function renderResult() {
@@ -91,24 +121,34 @@ function renderResult() {
     return;
   }
 
-  const bars = blocks.map((b) => `
-    <div class="bar-row">
-      <span class="bar-label">${b.key}</span>
+  const bars = blocks.map((b) => {
+    const weak = !r.allNative && r.holdingBack.includes(b);
+    return `
+    <div class="bar-row${weak ? " weak" : ""}">
+      <span class="bar-label"><span class="bar-key">${b.key}</span> ${loc(b.name)}</span>
       <div class="bar"><div class="fill" style="width:${(state.answers[b.key] / 3) * 100}%"></div></div>
       <span class="bar-value">${state.answers[b.key]}</span>
-    </div>`).join("");
+    </div>`;
+  }).join("");
+
+  let body;
+  if (r.allNative) {
+    body = `<div class="card"><p>${loc(allNative)}</p></div>`;
+  } else {
+    body = `
+    <h3>${t("plan")}</h3>
+    <ol class="plan">${buildPlan(r).map((step, i) => `
+      <li${i === 0 ? ' class="first"' : ""}><strong>${step.when}${step.block ? ` · ${loc(step.block.name)}` : ""}</strong> ${step.text}</li>`).join("")}
+    </ol>`;
+  }
 
   result.hidden = false;
   result.innerHTML = `
-    <h2>${t("overall")}: ${loc(stages[r.stage - 1].name)} <span class="muted">(${r.average.toFixed(1)} / 3)</span></h2>
+    <h2>${t("overall")}: ${loc(stages[r.stage - 1].name)}
+      <span class="muted">(${t("average")} ${num(r.average)} / 3)</span></h2>
+    ${r.allNative ? "" : `<p class="held-back">${t("heldBack")(joinNames(r.holdingBack))}</p>`}
     <div class="bars">${bars}</div>
-    <div class="card">
-      <p class="eyebrow">${t("focus")}</p>
-      <h3>${r.focus.key} · ${loc(r.focus.name)}</h3>
-      <p>${loc(r.focus.nextStep)}</p>
-    </div>
-    <h3>${t("plan")}</h3>
-    <ol class="plan">${plan[state.lang].map(([when, what]) => `<li><strong>${when}</strong> ${what}</li>`).join("")}</ol>
+    ${body}
     <button id="copy" class="ghost" type="button">${t("copy")}</button>`;
 
   document.getElementById("copy").addEventListener("click", (e) => copySummary(r, e.target));
@@ -117,10 +157,15 @@ function renderResult() {
 
 function copySummary(r, button) {
   const lines = [
-    `GOVERN: ${t("overall")} ${loc(stages[r.stage - 1].name)} (${r.average.toFixed(1)} / 3)`,
+    `GOVERN: ${t("overall")} ${loc(stages[r.stage - 1].name)} (${t("average")} ${num(r.average)} / 3)`,
     ...blocks.map((b) => `${b.key} ${loc(b.name)}: ${state.answers[b.key]}`),
-    `${t("focus")}: ${loc(r.focus.name)}. ${loc(r.focus.nextStep)}`
+    ""
   ];
+  if (r.allNative) {
+    lines.push(loc(allNative));
+  } else {
+    lines.push(`${t("plan")}:`, ...buildPlan(r).map((s) => `- ${s.when}: ${s.text}`));
+  }
   navigator.clipboard.writeText(lines.join("\n")).then(() => {
     button.textContent = t("copied");
   });
