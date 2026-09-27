@@ -2,7 +2,7 @@
 
 A short self-assessment that tells a leadership team where it stands on running AI as part of its operating model, and what to do first.
 
-**[Try it live](#)** · English and German
+**[Try it live](https://utany00.github.io/govern-assessment/)** · English and German
 
 ## The problem
 
@@ -49,4 +49,4 @@ To publish: in the repo settings, turn on GitHub Pages from the `main` branch.
 
 ## About
 
-GOVERN is a framework I developed for leadership teams working through AI adoption. I'm a product leader and former CPO at iHeartMedia. More on my [profile](#).
+GOVERN is a framework I developed for leadership teams working through AI adoption. I'm a product leader and former CPO at iHeartMedia. More on my [profile](https://github.com/utany00).
