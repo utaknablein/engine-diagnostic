@@ -1,48 +1,52 @@
-// GOVERN Diagnostic
-// Renders the six building blocks, collects a stage (1 to 3) for each,
-// and returns a readout: the stage set by the weakest blocks, where to start,
-// and a 30-day plan built from the reader's own answers.
+// ENGINE Diagnostic
+// Renders the six disciplines, collects a stage (1 to 4) for each, and returns a readout:
+// the stage set by the weakest disciplines, what stalling feels like there,
+// and a 90-day plan built from the reader's own answers.
 
 const UI = {
   en: {
-    title: "AI Operating Model Diagnostic",
-    intro: "Six building blocks, three stages each. Choose the description that matches where your organization is today, not where you plan to be.",
+    title: "AI Maturity Diagnostic",
+    intro: "Six disciplines, four stages. Choose the description that matches where your organization is today, not where you plan to be.",
     score: "See my readout",
-    missing: "Please choose a stage for every building block.",
+    missing: "Please choose a stage for every discipline.",
     overall: "Your stage",
     average: "average",
-    heldBack: (names) => `Held back by ${names}. Your weakest blocks set the pace, not your average.`,
-    plan: "Your next 30 days",
-    when: ["This week", "Within two weeks", "Within 30 days"],
+    heldBack: (names) => `Held back by ${names}. Your weakest disciplines set the pace, not your average.`,
+    stall: "What stalling sounds like at this stage",
+    plan: "Your next 90 days",
+    when: ["Next 30 days", "Within 60 days", "Within 90 days"],
     and: "and",
     copy: "Copy summary",
     copied: "Copied",
     lang: "Deutsch",
-    footer: "GOVERN is a framework by Uta Knablein. Nothing you enter leaves your browser."
+    footer: "ENGINE is a framework by Uta Knablein. Nothing you enter leaves your browser."
   },
   de: {
-    title: "Diagnose des KI-Betriebsmodells",
-    intro: "Sechs Bausteine, jeweils drei Stufen. Wählen Sie die Beschreibung, die Ihr Institut heute trifft, nicht den Zielzustand.",
+    title: "KI-Reifegrad-Diagnose",
+    intro: "Sechs Disziplinen, vier Stufen. Wählen Sie die Beschreibung, die Ihre Organisation heute trifft, nicht den Zielzustand.",
     score: "Auswertung anzeigen",
-    missing: "Bitte wählen Sie für jeden Baustein eine Stufe.",
+    missing: "Bitte wählen Sie für jede Disziplin eine Stufe.",
     overall: "Ihre Stufe",
     average: "Durchschnitt",
-    heldBack: (names) => `Gebremst durch ${names}. Ihre schwächsten Bausteine bestimmen das Tempo, nicht Ihr Durchschnitt.`,
-    plan: "Ihre nächsten 30 Tage",
-    when: ["Diese Woche", "In zwei Wochen", "In 30 Tagen"],
+    heldBack: (names) => `Gebremst durch ${names}. Ihre schwächsten Disziplinen bestimmen das Tempo, nicht Ihr Durchschnitt.`,
+    stall: "So klingt Stillstand auf dieser Stufe",
+    plan: "Ihre nächsten 90 Tage",
+    when: ["In 30 Tagen", "In 60 Tagen", "In 90 Tagen"],
     and: "und",
     copy: "Zusammenfassung kopieren",
     copied: "Kopiert",
     lang: "English",
-    footer: "GOVERN ist ein Framework von Uta Knäblein. Ihre Eingaben verlassen Ihren Browser nicht."
+    footer: "ENGINE ist ein Framework von Uta Knäblein. Ihre Eingaben verlassen Ihren Browser nicht."
   }
 };
 
 const state = { lang: "en", answers: {} };
-const { stages, blocks, closingStep, allNative } = window.GOVERN;
+const { stages, disciplines, closingStep, topStage } = window.ENGINE;
+const TOP = stages.length;
 
 const t = (key) => UI[state.lang][key];
 const loc = (obj) => obj[state.lang];
+const idOf = (d) => d.id || d.key; // ENGINE repeats letters, so each discipline has its own id
 const num = (n) => n.toLocaleString(state.lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
 function renderText() {
@@ -55,16 +59,16 @@ function renderText() {
 
 function renderForm() {
   const form = document.getElementById("form");
-  form.innerHTML = blocks.map((b) => `
+  form.innerHTML = disciplines.map((d) => `
     <fieldset>
-      <legend><span class="letter">${b.key}</span> ${loc(b.name)}</legend>
-      <p class="principle">${loc(b.principle)}</p>
-      <p class="question">${loc(b.question)}</p>
-      ${b.levels.map((lvl, i) => `
+      <legend><span class="letter">${d.key}</span> ${loc(d.name)}</legend>
+      <p class="principle">${loc(d.principle)}</p>
+      <p class="question">${loc(d.question)}</p>
+      ${d.levels.map((lvl, i) => `
         <label class="option">
-          <input type="radio" name="${b.key}" value="${i + 1}"
-            ${state.answers[b.key] === i + 1 ? "checked" : ""}>
-          <span><strong>${loc(stages[i].name)}</strong> ${loc(lvl)}</span>
+          <input type="radio" name="${idOf(d)}" value="${i + 1}"
+            ${state.answers[idOf(d)] === i + 1 ? "checked" : ""}>
+          <span><strong>${i + 1} · ${loc(stages[i].name)}</strong> ${loc(lvl)}</span>
         </label>`).join("")}
     </fieldset>`).join("");
 
@@ -76,28 +80,27 @@ function renderForm() {
 }
 
 // Pure scoring logic, kept separate so it can be tested on its own.
-// GOVERN's rule: the weakest block sets the pace, so the headline stage is the
-// lowest stage, not the rounded average. The average is shown only as context.
+// ENGINE's rule: organizations stall because they are missing two or three disciplines,
+// so the headline stage is the lowest stage, not the rounded average.
 function score(answers) {
-  const values = blocks.map((b) => answers[b.key]);
+  const values = disciplines.map((d) => answers[idOf(d)]);
   if (values.some((v) => !v)) return null;
 
   const average = values.reduce((a, b) => a + b, 0) / values.length;
   const lowest = Math.min(...values);
 
-  // Weakest first. Ties keep GOVERN order, because the framework is sequenced:
-  // Ground before Orchestrate, and so on. (Array.prototype.sort is stable.)
-  const ranked = [...blocks].sort((a, b) => answers[a.key] - answers[b.key]);
-  const holdingBack = blocks.filter((b) => answers[b.key] === lowest);
-  const priorities = ranked.filter((b) => answers[b.key] < 3).slice(0, 2);
+  // Weakest first. Ties keep ENGINE order. (Array.prototype.sort is stable.)
+  const ranked = [...disciplines].sort((a, b) => answers[idOf(a)] - answers[idOf(b)]);
+  const holdingBack = disciplines.filter((d) => answers[idOf(d)] === lowest);
+  const priorities = ranked.filter((d) => answers[idOf(d)] < TOP).slice(0, 2);
 
-  return { average, stage: lowest, holdingBack, priorities, allNative: lowest === 3 };
+  return { average, stage: lowest, holdingBack, priorities, atTop: lowest === TOP };
 }
 
-// The plan: one step for each of the two weakest blocks, then a team step.
+// The plan: one step for each of the two weakest disciplines, then a team step.
 function buildPlan(r) {
-  const steps = r.priorities.map((b) => ({ block: b, text: loc(b.nextStep) }));
-  steps.push({ block: null, text: loc(closingStep) });
+  const steps = r.priorities.map((d) => ({ discipline: d, text: loc(d.nextStep) }));
+  steps.push({ discipline: null, text: loc(closingStep) });
   const when = t("when");
   return steps.map((step, i) => ({
     ...step,
@@ -106,7 +109,7 @@ function buildPlan(r) {
 }
 
 function joinNames(list) {
-  const names = list.map((b) => loc(b.name));
+  const names = list.map((d) => loc(d.name));
   if (names.length === 1) return names[0];
   return `${names.slice(0, -1).join(", ")} ${t("and")} ${names[names.length - 1]}`;
 }
@@ -121,33 +124,37 @@ function renderResult() {
     return;
   }
 
-  const bars = blocks.map((b) => {
-    const weak = !r.allNative && r.holdingBack.includes(b);
+  const stage = stages[r.stage - 1];
+
+  const bars = disciplines.map((d) => {
+    const weak = !r.atTop && r.holdingBack.includes(d);
     return `
     <div class="bar-row${weak ? " weak" : ""}">
-      <span class="bar-label"><span class="bar-key">${b.key}</span> ${loc(b.name)}</span>
-      <div class="bar"><div class="fill" style="width:${(state.answers[b.key] / 3) * 100}%"></div></div>
-      <span class="bar-value">${state.answers[b.key]}</span>
+      <span class="bar-label"><span class="bar-key">${d.key}</span> ${loc(d.name)}</span>
+      <div class="bar"><div class="fill" style="width:${(state.answers[idOf(d)] / TOP) * 100}%"></div></div>
+      <span class="bar-value">${state.answers[idOf(d)]}</span>
     </div>`;
   }).join("");
 
-  let body;
-  if (r.allNative) {
-    body = `<div class="card"><p>${loc(allNative)}</p></div>`;
-  } else {
-    body = `
+  const stall = stage.stall
+    ? `<p class="stall"><span class="eyebrow">${t("stall")}</span>${loc(stage.stall)}</p>`
+    : "";
+
+  const body = r.atTop
+    ? `<div class="card"><p>${loc(topStage)}</p></div>`
+    : `
     <h3>${t("plan")}</h3>
     <ol class="plan">${buildPlan(r).map((step, i) => `
-      <li${i === 0 ? ' class="first"' : ""}><strong>${step.when}${step.block ? ` · ${loc(step.block.name)}` : ""}</strong> ${step.text}</li>`).join("")}
+      <li${i === 0 ? ' class="first"' : ""}><strong>${step.when}${step.discipline ? ` · ${loc(step.discipline.name)}` : ""}</strong> ${step.text}</li>`).join("")}
     </ol>`;
-  }
 
   result.hidden = false;
   result.innerHTML = `
-    <h2>${t("overall")}: ${loc(stages[r.stage - 1].name)}
-      <span class="muted">(${t("average")} ${num(r.average)} / 3)</span></h2>
-    ${r.allNative ? "" : `<p class="held-back">${t("heldBack")(joinNames(r.holdingBack))}</p>`}
+    <h2>${t("overall")}: ${loc(stage.name)}
+      <span class="muted">(${t("average")} ${num(r.average)} / ${TOP})</span></h2>
+    ${r.atTop ? "" : `<p class="held-back">${t("heldBack")(joinNames(r.holdingBack))}</p>`}
     <div class="bars">${bars}</div>
+    ${stall}
     ${body}
     <button id="copy" class="ghost" type="button">${t("copy")}</button>`;
 
@@ -157,12 +164,12 @@ function renderResult() {
 
 function copySummary(r, button) {
   const lines = [
-    `GOVERN: ${t("overall")} ${loc(stages[r.stage - 1].name)} (${t("average")} ${num(r.average)} / 3)`,
-    ...blocks.map((b) => `${b.key} ${loc(b.name)}: ${state.answers[b.key]}`),
+    `ENGINE: ${t("overall")} ${loc(stages[r.stage - 1].name)} (${t("average")} ${num(r.average)} / ${TOP})`,
+    ...disciplines.map((d) => `${d.key} ${loc(d.name)}: ${state.answers[idOf(d)]}`),
     ""
   ];
-  if (r.allNative) {
-    lines.push(loc(allNative));
+  if (r.atTop) {
+    lines.push(loc(topStage));
   } else {
     lines.push(`${t("plan")}:`, ...buildPlan(r).map((s) => `- ${s.when}: ${s.text}`));
   }

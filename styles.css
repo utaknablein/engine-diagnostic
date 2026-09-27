@@ -98,3 +98,6 @@ button.ghost { background: transparent; color: var(--accent); border: 1px solid 
 .plan strong { display: block; }
 
 footer { color: var(--muted); font-size: .85rem; padding: 32px 16px 48px; }
+
+.stall { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--weak); border-radius: 8px; padding: 14px 18px; margin: 0 0 24px; font-style: italic; }
+.stall .eyebrow { display: block; font-style: normal; margin-bottom: 6px; color: var(--weak); }

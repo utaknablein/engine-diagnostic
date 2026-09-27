@@ -1,72 +1,78 @@
-// GOVERN framework content.
+// ENGINE framework content.
 // Everything a reader sees lives here, so the framework can evolve without touching app logic.
-// Stage descriptions are working drafts: refine them against the Diagnose instrument.
 
-window.GOVERN = {
+window.ENGINE = {
   stages: [
-    { id: 1, name: { en: "Experimenting", de: "Experimentieren" } },
-    { id: 2, name: { en: "Coordinating", de: "Koordinieren" } },
-    { id: 3, name: { en: "Native", de: "Nativ" } }
+    {
+      id: 1,
+      name: { en: "Experimenter", de: "Experimentierer" },
+      stall: {
+        en: "\"We have great use cases. We just need to connect them.\"",
+        de: "„Wir haben großartige Anwendungsfälle. Wir müssen sie nur verbinden.“"
+      }
+    },
+    {
+      id: 2,
+      name: { en: "Enabler", de: "Befähiger" },
+      stall: {
+        en: "\"People are using the tools, but I do not see it changing how we actually make decisions.\"",
+        de: "„Die Leute nutzen die Werkzeuge, aber ich sehe nicht, dass sich dadurch ändert, wie wir tatsächlich entscheiden.“"
+      }
+    },
+    {
+      id: 3,
+      name: { en: "Orchestrator", de: "Orchestrator" },
+      stall: {
+        en: "\"We are good internally. It is the external ecosystem that is holding us back.\"",
+        de: "„Intern sind wir gut. Es ist das externe Ökosystem, das uns bremst.“"
+      }
+    },
+    {
+      id: 4,
+      name: { en: "Ecosystem Leader", de: "Ökosystem-Führer" },
+      stall: null
+    }
   ],
 
-  blocks: [
+  disciplines: [
     {
-      key: "G",
-      name: { en: "Ground", de: "Verankern" },
+      key: "E",
+      name: { en: "Evaluate", de: "Evaluieren" },
       principle: {
-        en: "An honest inventory before any transformation.",
-        de: "Ehrliche Bestandsaufnahme vor jeder Transformation."
+        en: "Honest diagnosis before any prescription.",
+        de: "Ehrliche Diagnose vor jeder Verordnung."
       },
       question: {
-        en: "How many of your AI initiatives could you describe today, with an owner and a purpose for each?",
-        de: "Wie viele Ihrer KI-Initiativen könnten Sie heute benennen, jeweils mit Verantwortlichem und Zweck?"
+        en: "Can you say, with evidence, how many of your AI initiatives reached production at scale, not just pilot?",
+        de: "Können Sie belegen, wie viele Ihrer KI-Initiativen im großen Maßstab produktiv laufen, nicht nur als Pilot?"
       },
       levels: [
-        { en: "AI use is scattered. Nobody has a full list of what is running or who owns it.", de: "KI-Nutzung ist verstreut. Niemand hat einen vollständigen Überblick, was läuft und wem es gehört." },
-        { en: "There is an inventory, but it is maintained by hand and goes stale between reviews.", de: "Es gibt ein Inventar, aber es wird manuell gepflegt und veraltet zwischen den Reviews." },
-        { en: "A live inventory covers every AI tool and agent, each with a named owner, and leadership uses it in decisions.", de: "Ein aktuelles Inventar erfasst jedes KI-Werkzeug und jeden Agenten, jeweils mit namentlich Verantwortlichem, und der Vorstand nutzt es für Entscheidungen." }
+        { en: "Success is measured by pilots and demos. Nobody can say which initiatives reached production.", de: "Erfolg wird an Piloten und Demos gemessen. Niemand kann sagen, welche Initiativen produktiv laufen." },
+        { en: "Adoption is tracked, such as licenses and active users, but not whether AI changed outcomes.", de: "Die Nutzung wird erfasst, etwa Lizenzen und aktive Nutzer, aber nicht, ob KI die Ergebnisse verändert hat." },
+        { en: "We measure which decisions now run on AI-assisted inputs, and whether they got faster and better.", de: "Wir messen, welche Entscheidungen auf KI-gestützten Grundlagen beruhen und ob sie schneller und besser wurden." },
+        { en: "Measurement is continuous, and we benchmark against the industry, not just against our own past.", de: "Wir messen fortlaufend und vergleichen uns mit der Branche, nicht nur mit unserer eigenen Vergangenheit." }
       ],
       nextStep: {
-        en: "List every AI initiative and agent in one place, with a named owner and a one-line purpose for each.",
-        de: "Listen Sie alle KI-Initiativen und Agenten an einem Ort auf, jeweils mit namentlich Verantwortlichem und Zweck in einem Satz."
+        en: "Count your AI initiatives running in production at scale. Put that number next to your pilot count and share both with the leadership team.",
+        de: "Zählen Sie Ihre KI-Initiativen, die im großen Maßstab produktiv laufen. Stellen Sie diese Zahl neben die Zahl Ihrer Piloten und teilen Sie beide mit der Führungsebene."
       }
     },
     {
-      key: "O",
-      name: { en: "Orchestrate", de: "Koordinieren" },
+      key: "N",
+      name: { en: "Navigate", de: "Navigieren" },
       principle: {
-        en: "Coordination, not technology, is the new competitive advantage.",
-        de: "Koordination, nicht Technologie, ist der neue Wettbewerbsvorteil."
+        en: "Governance designed to guide, not to block: responsible speed.",
+        de: "Governance, die leitet statt blockiert: verantwortungsvolles Tempo."
       },
       question: {
-        en: "In three years, when everyone uses the same models, what will set your institution apart?",
-        de: "In drei Jahren, wenn alle dieselben Modelle nutzen: Was unterscheidet dann Ihr Institut?"
+        en: "Does your governance make the right AI work faster, or does it slow everything down equally?",
+        de: "Beschleunigt Ihre Governance die richtige KI-Arbeit, oder bremst sie alles gleichermaßen?"
       },
       levels: [
-        { en: "Teams pick tools and use cases independently. Efforts overlap and compete.", de: "Teams wählen Werkzeuge und Anwendungsfälle unabhängig. Initiativen überschneiden sich." },
-        { en: "A central function coordinates, but mostly by approving requests.", de: "Eine zentrale Stelle koordiniert, überwiegend durch Freigaben." },
-        { en: "AI priorities follow the strategy, and the portfolio is managed as a whole.", de: "KI-Prioritäten folgen der Strategie, das Portfolio wird als Ganzes gesteuert." }
-      ],
-      nextStep: {
-        en: "Pick the three initiatives that matter most to the strategy and stop or merge one that does not.",
-        de: "Wählen Sie die drei strategisch wichtigsten Initiativen und stoppen oder bündeln Sie eine, die nicht dazu passt."
-      }
-    },
-    {
-      key: "V",
-      name: { en: "Verify", de: "Verifizieren" },
-      principle: {
-        en: "Zero-trust governance before deployment: ex ante, not reactive.",
-        de: "Zero-Trust-Governance vor dem Deployment: ex ante, nicht reaktiv."
-      },
-      question: {
-        en: "Do you decide what an AI system may and may not do before it goes live, or after something goes wrong?",
-        de: "Legen Sie fest, was ein KI-System darf, bevor es live geht, oder erst, wenn etwas schiefgeht?"
-      },
-      levels: [
-        { en: "Checks happen after launch, usually in response to a problem.", de: "Prüfungen finden nach dem Start statt, meist als Reaktion auf ein Problem." },
-        { en: "There is a pre-launch review, but it is a gate rather than part of the design.", de: "Es gibt eine Prüfung vor dem Start, aber als Hürde, nicht als Teil des Designs." },
-        { en: "Every agent has defined permissions, a human checkpoint and an escalation path, designed in before it runs.", de: "Jeder Agent hat festgelegte Befugnisse, einen menschlichen Prüfpunkt und einen Eskalationsweg, gestaltet bevor er startet." }
+        { en: "Governance is missing, or a compliance checklist applied after the fact.", de: "Governance fehlt oder ist eine Compliance-Checkliste, die nachträglich angewendet wird." },
+        { en: "There is a review process, but it is a gate that slows everything down equally.", de: "Es gibt einen Prüfprozess, aber er ist eine Hürde, die alles gleichermaßen verlangsamt." },
+        { en: "Governance is designed in: clear decision rights, defined boundaries for every system and agent, and fast lanes for low-risk work.", de: "Governance ist mitgestaltet: klare Entscheidungsrechte, festgelegte Grenzen für jedes System und jeden Agenten und schnelle Wege für Arbeit mit geringem Risiko." },
+        { en: "Partners and regulators trust our governance, and our standards help shape how the industry works.", de: "Partner und Aufsicht vertrauen unserer Governance, und unsere Standards prägen, wie die Branche arbeitet." }
       ],
       nextStep: {
         en: "For one live AI system or agent, write down what it may do alone, what needs a human, what it must never do, and who is accountable.",
@@ -74,20 +80,43 @@ window.GOVERN = {
       }
     },
     {
-      key: "E",
-      name: { en: "Embed", de: "Einbetten" },
+      key: "G",
+      name: { en: "Generate", de: "Generieren" },
       principle: {
-        en: "AI built into the workflow: native, not an optional tool.",
-        de: "KI strukturell im Workflow: nativ, nicht als optionales Werkzeug."
+        en: "A new ROI language: Decision Velocity and the Trust Dividend.",
+        de: "Eine neue Sprache für den ROI: Decision Velocity und die Trust Dividend."
       },
       question: {
-        en: "If an analyst never opens the AI tool, does the quality of the decision change?",
-        de: "Wenn Ihr Analyst das KI-Werkzeug nicht öffnet: Ändert das die Qualität der Entscheidung?"
+        en: "When you report the return on AI, do you talk about hours saved or decisions improved?",
+        de: "Wenn Sie über den Ertrag von KI berichten: Sprechen Sie über eingesparte Stunden oder über bessere Entscheidungen?"
       },
       levels: [
-        { en: "AI is an optional tool that individuals use when they choose to.", de: "KI ist ein optionales Werkzeug, das Einzelne nach Belieben nutzen." },
-        { en: "AI is part of some workflows, but the process would run the same without it.", de: "KI ist Teil einiger Abläufe, aber der Prozess liefe ohne sie genauso." },
-        { en: "Key workflows are designed for people and agents together: agents are triggered by events, hand work to each other, and pass decisions to people.", de: "Zentrale Abläufe sind für Menschen und Agenten gemeinsam gestaltet: Agenten starten durch Ereignisse, übergeben einander Arbeit und reichen Entscheidungen an Menschen weiter." }
+        { en: "The return on AI is a demo that impressed the board, or it is not measured at all.", de: "Der Ertrag von KI ist eine Demo, die den Vorstand beeindruckt hat, oder er wird gar nicht gemessen." },
+        { en: "The return is efficiency: hours saved and costs reduced.", de: "Der Ertrag ist Effizienz: eingesparte Stunden und gesenkte Kosten." },
+        { en: "The return is Decision Velocity: the speed and quality of the decisions that run the business.", de: "Der Ertrag ist Decision Velocity: Tempo und Qualität der Entscheidungen, die das Geschäft steuern." },
+        { en: "The return includes the Trust Dividend: business that becomes possible because partners and customers trust how we use data.", de: "Der Ertrag umfasst die Trust Dividend: Geschäft, das möglich wird, weil Partner und Kunden unserem Umgang mit Daten vertrauen." }
+      ],
+      nextStep: {
+        en: "Name the two or three decisions whose speed and quality matter most to your results, and measure how long each takes today.",
+        de: "Benennen Sie die zwei oder drei Entscheidungen, deren Tempo und Qualität für Ihre Ergebnisse am wichtigsten sind, und messen Sie, wie lange jede heute dauert."
+      }
+    },
+    {
+      key: "I",
+      name: { en: "Integrate", de: "Integrieren" },
+      principle: {
+        en: "AI inside workflows, not alongside them.",
+        de: "KI in den Abläufen, nicht daneben."
+      },
+      question: {
+        en: "If your people stopped opening the AI tools tomorrow, would the process still run the same way?",
+        de: "Wenn Ihre Mitarbeitenden morgen die KI-Werkzeuge nicht mehr öffnen: Liefe der Prozess genauso weiter?"
+      },
+      levels: [
+        { en: "Individual teams run their own tools. Nothing connects.", de: "Einzelne Teams nutzen eigene Werkzeuge. Nichts ist verbunden." },
+        { en: "Tools are shared and widely used, but AI sits alongside the workflow. Adoption stalls at power users.", de: "Werkzeuge sind geteilt und verbreitet, aber KI steht neben dem Ablauf. Die Nutzung bleibt bei den Power-Usern stecken." },
+        { en: "Key workflows are redesigned around AI: agents are triggered by events, hand work to each other, and pass decisions to people.", de: "Zentrale Abläufe sind um KI herum neu gestaltet: Agenten starten durch Ereignisse, übergeben einander Arbeit und reichen Entscheidungen an Menschen weiter." },
+        { en: "Our workflows connect with partners' systems. Orchestration extends beyond our own walls.", de: "Unsere Abläufe sind mit den Systemen von Partnern verbunden. Die Orchestrierung reicht über unsere eigenen Grenzen hinaus." }
       ],
       nextStep: {
         en: "Draw one important workflow end to end and mark where AI should do the work, not just assist.",
@@ -95,59 +124,63 @@ window.GOVERN = {
       }
     },
     {
-      key: "R",
-      name: { en: "Redesign", de: "Neu gestalten" },
+      key: "N",
+      id: "N2",
+      name: { en: "Normalize", de: "Normalisieren" },
       principle: {
-        en: "From decision maker to decision architect.",
-        de: "Vom Entscheider zum Entscheidungsarchitekten."
+        en: "AI-native operations as the default, not a project.",
+        de: "KI-native Arbeit als Normalfall, nicht als Projekt."
       },
       question: {
-        en: "Does your leadership team spend more time making individual decisions or designing how decisions get made?",
-        de: "Verbringt Ihr Vorstand mehr Zeit mit Einzelentscheidungen oder mit der Gestaltung, wie entschieden wird?"
+        en: "Would a new hire learn to work with AI from how the work is designed, or only if they take the initiative themselves?",
+        de: "Würde eine neue Mitarbeiterin den Umgang mit KI aus der Gestaltung der Arbeit lernen, oder nur aus eigener Initiative?"
       },
       levels: [
-        { en: "Leaders make decisions case by case. AI informs some of them.", de: "Führungskräfte entscheiden Fall für Fall. KI liefert gelegentlich Input." },
-        { en: "Some decision rules are written down, but mostly for compliance.", de: "Einige Entscheidungsregeln sind dokumentiert, überwiegend aus Compliance-Gründen." },
-        { en: "Leaders design decision systems in which agents prepare and people decide, and spend their own time on the exceptions.", de: "Führungskräfte gestalten Entscheidungssysteme, in denen Agenten vorbereiten und Menschen entscheiden, und kümmern sich selbst um die Ausnahmen." }
+        { en: "AI depends on enthusiasts. When they leave, the practice leaves with them.", de: "KI hängt an Enthusiasten. Wenn sie gehen, geht die Praxis mit." },
+        { en: "There is an AI program and training, but using AI is still optional.", de: "Es gibt ein KI-Programm und Schulungen, aber die Nutzung von KI ist weiterhin freiwillig." },
+        { en: "In core work, AI is simply how things are done. Every agent has an owner and is reviewed like a team member.", de: "In der Kernarbeit ist KI einfach der Normalfall. Jeder Agent hat einen Verantwortlichen und wird wie ein Teammitglied überprüft." },
+        { en: "AI-native work is institutional memory. New people cannot imagine working any other way.", de: "KI-native Arbeit ist institutionelles Gedächtnis. Neue Mitarbeitende können sich keine andere Arbeitsweise vorstellen." }
       ],
       nextStep: {
-        en: "Name one recurring decision and write the rule that would let it be made well without you.",
-        de: "Benennen Sie eine wiederkehrende Entscheidung und formulieren Sie die Regel, nach der sie ohne Sie gut getroffen würde."
+        en: "Pick one team and make AI part of how its core work is designed, not an optional tool. Give every agent it uses a named owner.",
+        de: "Wählen Sie ein Team und machen Sie KI zum Teil der Gestaltung seiner Kernarbeit, nicht zu einem optionalen Werkzeug. Geben Sie jedem Agenten einen namentlich Verantwortlichen."
       }
     },
     {
-      key: "N",
-      name: { en: "Normalize", de: "Normalisieren" },
+      key: "E",
+      id: "E2",
+      name: { en: "Expand", de: "Expandieren" },
       principle: {
-        en: "AI governance as an institutional standard, not a project.",
-        de: "KI-Governance als institutioneller Standard, nicht als Projekt."
+        en: "From enterprise engine to ecosystem standard.",
+        de: "Vom Motor des Unternehmens zum Standard des Ökosystems."
       },
       question: {
-        en: "If the project team disbanded tomorrow, would your AI governance keep running?",
-        de: "Wenn sich das Projektteam morgen auflöst: Läuft Ihre KI-Governance weiter?"
+        en: "Do partners and customers trust your data and AI practices enough to build on them?",
+        de: "Vertrauen Partner und Kunden Ihrem Umgang mit Daten und KI genug, um darauf aufzubauen?"
       },
       levels: [
-        { en: "Governance depends on a project or a few committed people.", de: "Governance hängt an einem Projekt oder an wenigen engagierten Personen." },
-        { en: "Governance has a home, but it runs alongside the business rather than inside it.", de: "Governance hat einen festen Ort, läuft aber neben dem Geschäft statt darin." },
-        { en: "Governance is part of normal operations: agents are reviewed like team members, and those that do not earn their place are retired.", de: "Governance gehört zum normalen Betrieb: Agenten werden wie Teammitglieder überprüft, und Agenten ohne Mehrwert werden abgeschaltet." }
+        { en: "AI is purely internal, and mostly experiments.", de: "KI ist rein intern und überwiegend experimentell." },
+        { en: "We work with vendors, but on their terms and their standards.", de: "Wir arbeiten mit Anbietern, aber zu deren Bedingungen und Standards." },
+        { en: "Partners rely on our data and AI practices. Trust is a deliberate part of what we offer.", de: "Partner verlassen sich auf unseren Umgang mit Daten und KI. Vertrauen ist bewusst Teil unseres Angebots." },
+        { en: "Our standards and ways of orchestrating AI are becoming the industry default.", de: "Unsere Standards und unsere Art, KI zu orchestrieren, werden zum Branchenstandard." }
       ],
       nextStep: {
-        en: "Put AI governance on the standing leadership agenda with a fixed cadence and an owner.",
-        de: "Setzen Sie KI-Governance mit festem Rhythmus und klarer Verantwortung auf die ständige Vorstandsagenda."
+        en: "List the business you cannot do today because partners or customers do not trust how data would be used. Estimate what it is worth.",
+        de: "Listen Sie das Geschäft auf, das Sie heute nicht machen können, weil Partner oder Kunden dem Umgang mit Daten nicht vertrauen. Schätzen Sie, was es wert ist."
       }
     }
   ],
 
-  // The 30-day plan is built from the reader's two weakest blocks (see app.js).
+  // The plan is built from the reader's two weakest disciplines (see app.js).
   // This last step is the same for everyone: a diagnostic is most useful as a team conversation.
   closingStep: {
     en: "Ask each member of your leadership team to complete this diagnostic separately, then compare where your answers differ.",
-    de: "Lassen Sie jedes Vorstandsmitglied diese Diagnose einzeln ausfüllen und vergleichen Sie, wo Ihre Einschätzungen auseinandergehen."
+    de: "Lassen Sie jedes Mitglied Ihrer Führungsebene diese Diagnose einzeln ausfüllen und vergleichen Sie, wo Ihre Einschätzungen auseinandergehen."
   },
 
-  // Shown when every block is at stage 3.
-  allNative: {
-    en: "You are at stage 3 across all six blocks. The risk now is drift: review this every quarter, and test your answers against someone outside the leadership team.",
-    de: "Sie stehen in allen sechs Bausteinen auf Stufe 3. Das Risiko ist jetzt schleichender Rückschritt: Prüfen Sie dies jedes Quartal und gleichen Sie Ihre Einschätzung mit jemandem außerhalb des Vorstands ab."
+  // Shown when every discipline is at the top stage.
+  topStage: {
+    en: "You are at the top stage in all six disciplines. The risk now is complacency: run this every quarter, and test your answers against partners, not only your own team.",
+    de: "Sie stehen in allen sechs Disziplinen auf der höchsten Stufe. Das Risiko ist jetzt Selbstzufriedenheit: Wiederholen Sie dies jedes Quartal und gleichen Sie Ihre Einschätzung mit Partnern ab, nicht nur mit Ihrem eigenen Team."
   }
 };
