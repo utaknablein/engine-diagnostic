@@ -38,7 +38,7 @@ The six disciplines are practiced at the same time, not in sequence. Organizatio
 - **Name the stall.** Each stage has a typical sentence leaders say when they are stuck there. The readout shows it, because recognizing the sentence is often the moment a team admits where it really is.
 - **A plan built from your answers.** The 90-day plan takes your two weakest disciplines and gives one action for each, then ends with a team step: everyone answers separately and compares. Every action is something a leader can start alone. No "set up a working group."
 - **Content is separate from logic.** All framework text lives in `data.js`, so the model can evolve without touching the app.
-- **Nothing leaves the browser.** No backend, no tracking, no sign-up. Leadership teams are rightly careful about where they type candid answers.
+- **Nothing is stored.** No backend, no tracking, no sign-up. Leadership teams are rightly careful about where they type candid answers. Anyone who wants to talk can send their readout from their own email, and they see exactly what they are sending before they send it.
 - **Bilingual from day one.** I work with executives in the US and the DACH region, and a diagnostic should be answered in the language people think in.
 
 ## Run it

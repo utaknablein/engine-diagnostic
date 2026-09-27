@@ -18,10 +18,15 @@ const UI = {
     and: "and",
     cta: "Different answers across your leadership team are the most useful finding. I facilitate ENGINE sessions that turn them into decisions.",
     ctaLink: "Get in touch",
+    send: "Send my results to Uta",
+    sendNote: "Opens your own email with your readout filled in. You see everything before you send it.",
+    mailSubject: "My ENGINE readout",
+    mailIntro: "Hi Uta,\n\nI took the ENGINE diagnostic. Here is my readout:",
+    mailAsk: "My role and company:\nWhat I would like to talk about:",
     copy: "Copy summary",
     copied: "Copied",
     lang: "Deutsch",
-    footer: "ENGINE is a framework by Uta Knablein. Nothing you enter leaves your browser."
+    footer: "ENGINE is a framework by Uta Knablein. Nothing you enter is stored. You decide whether to send your results."
   },
   de: {
     title: "KI-Reifegrad-Diagnose",
@@ -37,10 +42,15 @@ const UI = {
     and: "und",
     cta: "Unterschiedliche Antworten in Ihrer Führungsebene sind das wertvollste Ergebnis. Ich moderiere ENGINE-Sessions, die daraus Entscheidungen machen.",
     ctaLink: "Kontakt aufnehmen",
+    send: "Meine Auswertung an Uta senden",
+    sendNote: "Öffnet Ihr eigenes E-Mail-Programm mit Ihrer Auswertung. Sie sehen alles, bevor Sie senden.",
+    mailSubject: "Meine ENGINE-Auswertung",
+    mailIntro: "Hallo Uta,\n\nich habe die ENGINE-Diagnose ausgefüllt. Hier ist meine Auswertung:",
+    mailAsk: "Meine Rolle und mein Unternehmen:\nWorüber ich gern sprechen würde:",
     copy: "Zusammenfassung kopieren",
     copied: "Kopiert",
     lang: "English",
-    footer: "ENGINE ist ein Framework von Uta Knäblein. Ihre Eingaben verlassen Ihren Browser nicht."
+    footer: "ENGINE ist ein Framework von Uta Knäblein. Ihre Eingaben werden nicht gespeichert. Sie entscheiden, ob Sie Ihre Auswertung senden."
   }
 };
 
@@ -48,6 +58,7 @@ const state = { lang: "en", answers: {} };
 const { stages, disciplines, closingStep, topStage } = window.ENGINE;
 const TOP = stages.length;
 const CONTACT_URL = "https://www.linkedin.com/in/utaknablein/";
+const CONTACT_EMAIL = "uta@knablein.com";
 
 const t = (key) => UI[state.lang][key];
 const loc = (obj) => obj[state.lang];
@@ -163,7 +174,11 @@ function renderResult() {
     ${body}
     <div class="cta">
       <p>${t("cta")}</p>
-      <a href="${CONTACT_URL}" target="_blank" rel="noopener">${t("ctaLink")} →</a>
+      <div class="cta-actions">
+        <a class="button" href="${mailtoLink(r)}">${t("send")}</a>
+        <a href="${CONTACT_URL}" target="_blank" rel="noopener">${t("ctaLink")} →</a>
+      </div>
+      <p class="send-note">${t("sendNote")}</p>
     </div>
     <button id="copy" class="ghost" type="button">${t("copy")}</button>`;
 
@@ -171,7 +186,8 @@ function renderResult() {
   result.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-function copySummary(r, button) {
+// One plain-text summary, used for both copying and the email.
+function summaryText(r) {
   const lines = [
     `ENGINE: ${t("overall")} ${loc(stages[r.stage - 1].name)} (${t("average")} ${num(r.average)} / ${TOP})`,
     ...disciplines.map((d) => `${d.key} ${loc(d.name)}: ${state.answers[idOf(d)]}`),
@@ -180,9 +196,19 @@ function copySummary(r, button) {
   if (r.atTop) {
     lines.push(loc(topStage));
   } else {
-    lines.push(`${t("plan")}:`, ...buildPlan(r).map((s) => `- ${s.when}: ${s.text}`));
+    lines.push(`${t("plan")}:`, ...buildPlan(r).map((s) => `- ${s.when}${s.discipline ? ` (${loc(s.discipline.name)})` : ""}: ${s.text}`));
   }
-  navigator.clipboard.writeText(lines.join("\n")).then(() => {
+  return lines.join("\n");
+}
+
+// Opens the visitor's own email client. Nothing is sent unless they press send.
+function mailtoLink(r) {
+  const body = `${t("mailIntro")}\n\n${summaryText(r)}\n\n${t("mailAsk")}\n`;
+  return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(t("mailSubject"))}&body=${encodeURIComponent(body)}`;
+}
+
+function copySummary(r, button) {
+  navigator.clipboard.writeText(summaryText(r)).then(() => {
     button.textContent = t("copied");
   });
 }
