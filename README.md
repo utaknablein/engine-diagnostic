@@ -52,6 +52,10 @@ Open `index.html` in a browser. There is no build step and no dependencies.
 - [ ] An example from practice for each stage
 - [ ] Tests for the scoring logic
 
+## Work with me
+
+The diagnostic is most useful as a team conversation. When members of a leadership team answer differently, that gap is the finding. I facilitate ENGINE sessions that turn those differences into decisions and a 90-day plan, in English and German. [Send me a message on LinkedIn](https://www.linkedin.com/in/utaknablein/).
+
 ## About
 
 ENGINE is a framework I developed for leadership teams moving from AI experimentation to intelligent operations. I am a product leader and former CPO at iHeartMedia. More on my [profile](https://github.com/utaknablein), and the operating model behind it in [`product-operating-system`](https://github.com/utaknablein/product-operating-system) and [`agent-workflows`](https://github.com/utaknablein/agent-workflows).

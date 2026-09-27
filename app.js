@@ -16,6 +16,8 @@ const UI = {
     plan: "Your next 90 days",
     when: ["Next 30 days", "Within 60 days", "Within 90 days"],
     and: "and",
+    cta: "Different answers across your leadership team are the most useful finding. I facilitate ENGINE sessions that turn them into decisions.",
+    ctaLink: "Get in touch",
     copy: "Copy summary",
     copied: "Copied",
     lang: "Deutsch",
@@ -33,6 +35,8 @@ const UI = {
     plan: "Ihre nächsten 90 Tage",
     when: ["In 30 Tagen", "In 60 Tagen", "In 90 Tagen"],
     and: "und",
+    cta: "Unterschiedliche Antworten in Ihrer Führungsebene sind das wertvollste Ergebnis. Ich moderiere ENGINE-Sessions, die daraus Entscheidungen machen.",
+    ctaLink: "Kontakt aufnehmen",
     copy: "Zusammenfassung kopieren",
     copied: "Kopiert",
     lang: "English",
@@ -43,6 +47,7 @@ const UI = {
 const state = { lang: "en", answers: {} };
 const { stages, disciplines, closingStep, topStage } = window.ENGINE;
 const TOP = stages.length;
+const CONTACT_URL = "https://www.linkedin.com/in/utaknablein/";
 
 const t = (key) => UI[state.lang][key];
 const loc = (obj) => obj[state.lang];
@@ -156,6 +161,10 @@ function renderResult() {
     <div class="bars">${bars}</div>
     ${stall}
     ${body}
+    <div class="cta">
+      <p>${t("cta")}</p>
+      <a href="${CONTACT_URL}" target="_blank" rel="noopener">${t("ctaLink")} →</a>
+    </div>
     <button id="copy" class="ghost" type="button">${t("copy")}</button>`;
 
   document.getElementById("copy").addEventListener("click", (e) => copySummary(r, e.target));
