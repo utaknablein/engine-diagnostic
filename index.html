@@ -41,5 +41,11 @@
 
   <script src="data.js"></script>
   <script src="app.js"></script>
+<script data-goatcounter="https://utaknablein.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+  // Count key actions as events in GoatCounter (no cookies, no personal data)
+  function gcEvent(name) { try { window.goatcounter && window.goatcounter.count({ path: name, title: name, event: true }); } catch (e) {} }
+  document.getElementById("score").addEventListener("click", () => gcEvent("engine-scored"));
+</script>
 </body>
 </html>
