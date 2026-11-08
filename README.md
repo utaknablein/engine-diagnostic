@@ -39,16 +39,21 @@ The six disciplines are practiced at the same time, not in sequence. Organizatio
 - **A plan built from your answers.** The 90-day plan takes your two weakest disciplines and gives one action for each, then ends with a team step: everyone answers separately and compares. Every action is something a leader can start alone. No "set up a working group."
 - **Content is separate from logic.** All framework text lives in `data.js`, so the model can evolve without touching the app.
 - **Nothing is stored.** No backend, no tracking, no sign-up. Leadership teams are rightly careful about where they type candid answers. Anyone who wants to talk can send their readout from their own email, and they see exactly what they are sending before they send it.
+- **The readout fits on one page.** Print it or save it as a PDF and bring it to the leadership meeting. The page shows only the readout, the date, and the plan; the form and the controls stay on screen.
 - **Bilingual from day one.** I work with executives in the US and the DACH region, and a diagnostic should be answered in the language people think in.
 
 ## Run it
 
 Open `index.html` in a browser. There is no build step and no dependencies.
 
+## In practice
+
+At the GDS CDTO Summit in Memphis I ran this as a master track with a room of senior technology leaders. Everyone scored themselves on the six disciplines, then named their weakest one out loud. The pattern was consistent. Navigate came last most often, with Normalize close behind. The room was full of tools in use and pilots in flight. What was missing was governance designed to make the right AI work faster, and a way of working in which a new hire would meet AI in the design of the job rather than through their own initiative. Both are organisational disciplines, not technical ones, and both are what the weakest-discipline rule in this diagnostic exists to catch. The readout you get here is the one that room worked from. The discussion that followed is where it became useful.
+
 ## What is next
 
 - [ ] Team mode: several leaders answer separately, then see where they disagree
-- [ ] Printable one-page readout
+- [x] Printable one-page readout (print or save as PDF from the readout screen; bilingual, forced to light colours for paper)
 - [ ] An example from practice for each stage
 - [ ] Tests for the scoring logic
 

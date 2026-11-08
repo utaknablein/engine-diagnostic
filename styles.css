@@ -70,6 +70,8 @@ button {
   border: 0; border-radius: 8px; padding: 12px 20px;
 }
 button.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); padding: 8px 14px; }
+.result-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.print-only { display: none; }
 .actions { margin: 8px 0 32px; }
 
 #result { border-top: 1px solid var(--line); padding-top: 24px; }
@@ -110,3 +112,30 @@ footer { color: var(--muted); font-size: .85rem; padding: 32px 16px 48px; }
 .cta a.button { background: var(--accent); color: var(--surface); padding: 12px 20px; border-radius: 8px; white-space: normal; text-align: center; }
 .cta a.button:hover { text-decoration: none; opacity: .9; }
 .cta .send-note { flex: 1 1 100%; font-size: .85rem; color: var(--muted); margin: 0; }
+
+/* One-page readout. Everything but the result is hidden; colours are forced light for paper. */
+@media print {
+  :root {
+    --bg: #ffffff; --surface: #ffffff; --text: #111111; --muted: #555555;
+    --line: #cccccc; --accent: #1f4e79; --accent-soft: #eef2f7; --weak: #b0573a;
+  }
+  @page { margin: 18mm; }
+  body { background: #fff; color: #111; font-size: 11pt; }
+  header, .intro, #form, .actions, footer, .cta, .result-actions, #lang { display: none !important; }
+  .wrap { max-width: none; padding: 0; }
+  #result { border-top: 0; padding-top: 0; }
+  .print-only { display: block; }
+  .print-head { margin-bottom: 12pt; }
+  .print-head p { margin: 0; }
+  .print-foot { margin-top: 18pt; padding-top: 8pt; border-top: 1px solid var(--line); font-size: 9pt; color: var(--muted); }
+  h2 { font-size: 16pt; margin: 0 0 6pt; }
+  h3 { font-size: 12.5pt; margin: 12pt 0 4pt; }
+  .bars { margin: 8pt 0 12pt; }
+  .bar-row { margin: 4pt 0; break-inside: avoid; }
+  .bar { border: 1px solid var(--line); }
+  .fill { background: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .bar-row.weak .fill { background: var(--weak) !important; }
+  .stall, .card, .plan li { break-inside: avoid; }
+  .plan li { margin: 4pt 0; }
+  a[href]::after { content: ""; }
+}

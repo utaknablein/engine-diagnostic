@@ -25,6 +25,10 @@ const UI = {
     mailAsk: "My role and company:\nWhat I would like to talk about:",
     copy: "Copy summary",
     copied: "Copied",
+    print: "Print or save as PDF",
+    printTitle: "ENGINE readout",
+    printNote: "Self-assessment taken on",
+    printFooter: "ENGINE is a framework by Uta Knablein · utaknablein.github.io/engine-diagnostic",
     lang: "Deutsch",
     footer: "ENGINE is a framework by Uta Knablein. Nothing you enter is stored. You decide whether to send your results."
   },
@@ -49,6 +53,10 @@ const UI = {
     mailAsk: "Meine Rolle und mein Unternehmen:\nWorüber ich gern sprechen würde:",
     copy: "Zusammenfassung kopieren",
     copied: "Kopiert",
+    print: "Drucken oder als PDF speichern",
+    printTitle: "ENGINE-Auswertung",
+    printNote: "Selbsteinschätzung vom",
+    printFooter: "ENGINE ist ein Framework von Uta Knäblein · utaknablein.github.io/engine-diagnostic",
     lang: "English",
     footer: "ENGINE ist ein Framework von Uta Knäblein. Ihre Eingaben werden nicht gespeichert. Sie entscheiden, ob Sie Ihre Auswertung senden."
   }
@@ -164,8 +172,14 @@ function renderResult() {
       <li${i === 0 ? ' class="first"' : ""}><strong>${step.when}${step.discipline ? ` · ${loc(step.discipline.name)}` : ""}</strong> ${step.text}</li>`).join("")}
     </ol>`;
 
+  const today = new Date().toLocaleDateString(state.lang, { year: "numeric", month: "long", day: "numeric" });
+
   result.hidden = false;
   result.innerHTML = `
+    <div class="print-only print-head">
+      <p class="eyebrow">${t("printTitle")}</p>
+      <p class="muted">${t("printNote")} ${today}</p>
+    </div>
     <h2>${t("overall")}: ${loc(stage.name)}
       <span class="muted">(${t("average")} ${num(r.average)} / ${TOP})</span></h2>
     ${r.atTop ? "" : `<p class="held-back">${t("heldBack")(joinNames(r.holdingBack))}</p>`}
@@ -180,9 +194,17 @@ function renderResult() {
       </div>
       <p class="send-note">${t("sendNote")}</p>
     </div>
-    <button id="copy" class="ghost" type="button">${t("copy")}</button>`;
+    <div class="result-actions">
+      <button id="copy" class="ghost" type="button">${t("copy")}</button>
+      <button id="print" class="ghost" type="button">${t("print")}</button>
+    </div>
+    <p class="print-only print-foot">${t("printFooter")}</p>`;
 
   document.getElementById("copy").addEventListener("click", (e) => copySummary(r, e.target));
+  document.getElementById("print").addEventListener("click", () => {
+    if (window.gcEvent) window.gcEvent("engine-printed");
+    window.print();
+  });
   result.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
